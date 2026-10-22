@@ -2,15 +2,14 @@
    SOBAT DIGITAL — Modul Keamanan (file TERPISAH dari desain)
    1) Penjaga integritas QRIS: NMID + sidik SHA-256 payload resmi.
       Bila QRIS berubah/diganti -> pembayaran diblokir + peringatan.
-   2) Pengirim peringatan keamanan ke WhatsApp admin.
-      Otomatis penuh bila token gateway Fonnte diisi di bawah ini
-      (daftar gratis di fonnte.com, hubungkan nomor WA admin, tempel
-      token di fonnteToken). Selama kosong: peringatan tampil sebagai
-      banner dengan tombol kirim wa.me ke admin.
+   2) Pengirim peringatan keamanan ke Telegram admin via CallMeBot
+      (gratis; hanya bisa mengirim ke akun Telegram admin yang sudah
+      diotorisasi, jadi aman ditanam di file ini). Selama username
+      Telegram kosong: peringatan tampil sebagai banner + tombol WA.
    ===================================================================== */
 window.SD_ALERT_CONFIG = {
   adminWa: '6281411113564',
-  fonnteToken: ''
+  telegramUser: '@Yassop299'
 };
 window.SD_QRIS_GUARD = {
   nmid: 'ID1026572814253',
@@ -29,13 +28,11 @@ window.sdSecurityAlert = function (title, details) {
   ];
   var msg = lines.filter(Boolean).join('\n');
   try { console.warn('[SD-SECURITY]', msg); } catch (e) {}
-  if (cfg.fonnteToken) {
+  if (cfg.telegramUser) {
     try {
-      fetch('https://api.fonnte.com/send', {
-        method: 'POST',
-        headers: { 'Authorization': cfg.fonnteToken, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ target: cfg.adminWa, message: msg })
-      }).catch(function () {});
+      var url = 'https://api.callmebot.com/text.php?user=' + encodeURIComponent(cfg.telegramUser) +
+        '&text=' + encodeURIComponent(msg);
+      fetch(url, { mode: 'no-cors' }).catch(function () {});
     } catch (e) {}
   }
   window.__sdLastSecurityIncident = { title: title, details: details, at: Date.now(), message: msg };
