@@ -6563,5 +6563,58 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 </script>
 
+
+<style id="sdLayoutFix">
+/* ===== SOBAT DIGITAL — Perbaikan Layout Responsif (topbar, header, hero) ===== */
+html, body { overflow-x: clip; }
+img, svg, video, iframe { max-width: 100%; }
+.hero-inner > *, .trust-grid > *, .products-grid > *, .promo-grid > * { min-width: 0; }
+
+/* Header: izinkan membungkus agar tombol kanan tidak terpotong */
+.header-inner { flex-wrap: wrap; }
+.header-actions { flex-wrap: wrap; justify-content: flex-end; }
+.header-actions .btn { white-space: nowrap; }
+#customerAccountBtn, .js-customer-account-btn { max-width: 160px; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 1240px) {
+  .header-search { order: 3; flex: 1 1 100%; max-width: none; }
+  .header-actions { margin-left: auto; }
+}
+@media (max-width: 768px) {
+  .header-inner { justify-content: center; }
+  .header-actions { justify-content: center; margin-left: 0; }
+}
+
+/* Topbar: rapi & center saat membungkus / di HP */
+@media (max-width: 900px) {
+  .topbar-inner { justify-content: center; text-align: center; }
+  .topbar-contact-group { justify-content: center; }
+  .mode-switch-pills { margin-inline: auto; }
+}
+@media (max-width: 560px) {
+  .topbar-slogan, .topbar-divider, .topbar-sep-email, .topbar-email-link { display: none !important; }
+  .topbar-inner { gap: 0.4rem 0.75rem; }
+}
+
+/* Hero: center & aman di semua lebar */
+.hero-title { font-size: clamp(1.85rem, 5.2vw, 3.4rem); overflow-wrap: break-word; }
+.hero-badge { flex-wrap: wrap; max-width: 100%; }
+.hero-search-bar { width: 100%; }
+.hero-search-bar input { min-width: 0; }
+.hero-cta-group { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+@media (max-width: 900px) {
+  .hero-section { padding: 2.25rem 1rem; }
+  .hero-content { text-align: center; }
+  .hero-badge { justify-content: center; margin-inline: auto; }
+  .hero-search-bar { margin-inline: auto; }
+  .hero-cta-group { justify-content: center; }
+  .hero-card-showcase { margin-inline: auto; width: 100%; max-width: 520px; }
+  .trust-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 420px) {
+  .trust-grid { grid-template-columns: 1fr; }
+  .hero-cta-group .btn { flex: 1 1 100%; justify-content: center; }
+}
+</style>
+
 </body>
 </html>
