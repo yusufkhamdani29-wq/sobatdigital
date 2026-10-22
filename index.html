@@ -6542,5 +6542,48 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 </script>
 
+
+<script>
+/* ===== SOBAT DIGITAL — Perbaikan Logo untuk Cache Browser Lama (satu kali) ===== */
+(function () {
+  try {
+    if (localStorage.getItem('sd_logo_fix_v3') === '1') return;
+    function broken(u) {
+      if (!u) return true;
+      u = String(u);
+      if (u.indexOf('data:') === 0 || u.indexOf('http://') === 0 || u.indexOf('https://') === 0) return false;
+      return true; /* path lokal lama seperti public/images/... yang sudah tidak ada */
+    }
+    var pk = 'sobat_digital_products_v2';
+    var rawP = localStorage.getItem(pk);
+    if (rawP && typeof INITIAL_PRODUCTS !== 'undefined') {
+      var saved = JSON.parse(rawP), byId = {}, n = 0;
+      INITIAL_PRODUCTS.forEach(function (p) { byId[p.id] = p; });
+      saved.forEach(function (p) {
+        var src = byId[p.id];
+        if (src && src.imageUrl && broken(p.imageUrl)) { p.imageUrl = src.imageUrl; if (src.imagePath) p.imagePath = src.imagePath; n++; }
+      });
+      if (n) localStorage.setItem(pk, JSON.stringify(saved));
+    }
+    var sk = 'sobat_digital_settings_v2';
+    var rawS = localStorage.getItem(sk);
+    if (rawS && typeof INITIAL_STORE_SETTINGS !== 'undefined') {
+      var s = JSON.parse(rawS), d = INITIAL_STORE_SETTINGS, ch = false;
+      ['logoUrl', 'logoFullUrl'].forEach(function (k) {
+        if (d[k] && broken(s[k])) { s[k] = d[k]; ch = true; }
+      });
+      if (Array.isArray(s.banners) && Array.isArray(d.banners)) {
+        s.banners.forEach(function (b, i) {
+          var db = d.banners[i];
+          if (db && db.imageUrl && broken(b.imageUrl)) { b.imageUrl = db.imageUrl; ch = true; }
+        });
+      }
+      if (ch) localStorage.setItem(sk, JSON.stringify(s));
+    }
+    localStorage.setItem('sd_logo_fix_v3', '1');
+  } catch (e) {}
+})();
+</script>
+
 </body>
 </html>
