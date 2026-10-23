@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <script>/* Anti-clickjacking: situs tidak boleh dimuat di dalam frame situs lain */ if (window.top !== window.self) { window.top.location = window.self.location; }</script>
+  <style id="sd-anti-clickjack">html{display:none !important}</style>
+  <script>/* Anti-clickjacking (diperkuat 23 Okt 2026): halaman disembunyikan sampai terbukti tampil sebagai halaman utama. Bila dimuat di dalam frame situs lain, paksa halaman utama pindah ke alamat situs ini; bila navigasi itu diblokir (mis. iframe sandbox penyerang), halaman tetap tersembunyi sehingga tidak bisa ditumpuk overlay palsu. */ if (window.self === window.top) { var _sdg = document.getElementById('sd-anti-clickjack'); if (_sdg) { _sdg.remove(); } } else { try { window.top.location = window.self.location; } catch (e) {} }</script>
   <script src="security.js"></script>
   <script src="qris-config.js"></script>
   <title>SOBAT DIGITAL — Solusi Software Premium | E-Commerce Produk Digital</title>
